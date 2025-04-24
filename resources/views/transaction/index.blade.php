@@ -97,7 +97,8 @@
       </div>
     </div>
   </div>
-  @if ($message = Session::get('transaction_success'))
+  @if (Session('transaction_success'))
+  @php $message = session('transaction_success'); @endphp
   <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -390,8 +391,7 @@
                     <div class="input-group">
                       <select name="payment_method" id="payment_method" class="form-control">
                         <option value="Tunai">Tunai</option>
-                        <option value="QRIS">QRIS</option>
-                        <option value="Transfer_Bank">Transfer Bank</option>
+                        <option value="Transfer">Transfer</option>
                       </select>
                     </div>
                   </td>
@@ -413,7 +413,7 @@
                   
                   <td class="text-right">
                     <button class="btn btn-bayar" type="button"> <i class="mdi mdi-check"></i> Bayar</button>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#utangModal">
+                    <button type="button" class="btn btn-warning" id="btn-utang" data-toggle="modal" data-target="#utangModal">
                       <i class="mdi mdi-cash"></i> Utang
                     </button>
                   </td>
@@ -466,11 +466,13 @@
 <script src="{{ asset('plugins/js/quagga.min.js') }}"></script>
 <script src="{{ asset('js/transaction/script.js') }}"></script>
 <script src="{{ asset('js/transaction/pagination.js') }}"></script>
+<script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{config('midtrans.client_key')}}"></script>
+
 
 
 <script type="text/javascript">
 
-@if ($message = Session::get('transaction_success'))
+@if (Session('transaction_success') && !session('snapToken'))
   $('#successModal').modal('show');
 @endif
 
@@ -622,6 +624,7 @@ function increaseQuantity(id) {
   });
 }
 
+
 function startScan() {
   Quagga.init({
     inputStream : {
@@ -703,7 +706,7 @@ $(document).on('click', '.btn-bayar', function(){
 
  
   
-  if (paymentMethod === 'Tunai') {
+if (paymentMethod === 'Tunai') {
   var total = parseInt($('.nilai-total2-td').val());
   var bayar = parseInt($('.bayar-input').val());
   if(bayar >= total){
@@ -750,6 +753,12 @@ $(document).on('click', '.btn-bayar', function(){
       if($('.diskon-input').attr('hidden') != 'hidden'){
         $('.diskon-input').addClass('is-invalid');
       }else{
+        $('<input>').attr({
+        type: 'hidden',
+        name: 'action',
+        value: 'bayar'
+        }).appendTo('#transaction_form');
+
         sessionStorage.removeItem('disc')
         sessionStorage.removeItem('diskon')
         $('#transaction_form').submit();
@@ -833,13 +842,22 @@ $(document).on('click', '.category-link', function (e) {
 document.addEventListener("DOMContentLoaded", function () {
     const paymentMethod = document.getElementById("payment_method");
     const bayarRow = document.getElementById("bayar-row");
+    const btnUtang = document.getElementById("btn-utang");
 
     // Fungsi untuk mengontrol tampilan input
     function toggleBayarInput() {
       if (paymentMethod.value === "Tunai") {
+        btnUtang.disabled = false;
+        btnUtang.classList.remove("btn-secondary");
+        btnUtang.classList.add("btn-warning");
+
         bayarRow.style.display = ""; // Tampilkan
       } else {
+        btnUtang.classList.remove('btn-warning');
+        btnUtang.classList.add('btn-secondary');
         bayarRow.style.display = "none"; // Sembunyikan
+        btnUtang.disabled = true;
+
       }
     }
 
@@ -855,6 +873,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 
+
+
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{config('midtrans.client_key')}}"></script>
+@if (session('snapToken'))
+    <script>
+         snap.pay('{{ session('snapToken') }}', {
+            onSuccess: function(result) {
+                alert('Pembayaran berhasil!');
+                 // Trigger buka modal setelah sukses
+                 $('#successModal').modal('show');
+
+                
+            },
+            onPending: function(result) {
+                alert('Pembayaran tertunda.');
+            },
+            onError: function(result) {
+                alert('Terjadi kesalahan pembayaran.');
+            },
+            onClose: function() {
+                alert('Anda belum menyelesaikan pembayaran.');
+            }
+        });
+    </script>
+    
+@endif
 
 
 

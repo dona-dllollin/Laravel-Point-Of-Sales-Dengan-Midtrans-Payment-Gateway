@@ -23,6 +23,13 @@ use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        \Midtrans\Config::$isProduction = false; // Set true jika production
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+    }
 
     public function index(Request $request)
     {
@@ -278,7 +285,7 @@ class TransactionController extends Controller
             $market_id = 0;
             $market_id = $user->market_id ?? $req->market_id;
 
-            // $status = $req->payment_method === 'manual' ? 'completed' : 'pending';
+            $status = $req->payment_method === 'Tunai' ? 'completed' : 'pending';
             $bayar = $req->payment_method === 'Tunai' ? $req->bayar : $req->total;
 
         if($req->action === "bayar"){
@@ -291,7 +298,7 @@ class TransactionController extends Controller
                 'bayar' => $bayar,
                 'kembali' => $bayar - $req->total,
                 'market_id' => $market_id,
-                'status' => 'completed',
+                'status' => $status,
                 'metode' => $req->payment_method
             ]);
 
@@ -311,10 +318,22 @@ class TransactionController extends Controller
 
             // Hapus data keranjang di session
             session()->forget('cart');
+            if ($req->payment_method === 'Tunai') {
+                DB::commit();
+                    Session::flash('transaction_success', $transaksi);
+                    return back();
+            } else {
+                DB::commit();
+                $snapToken = $this->createSnapToken($transaksi);
+                if ($snapToken) {
+                    session()->flash('transaction_success', $transaksi);
+                    session()->flash('snapToken', $snapToken);
 
-            DB::commit();
-                Session::flash('transaction_success', $transaksi);
-                return back();
+                    return back();
+                } else {
+                    return back()->with('transaction_error', 'Gagal mendapatkan snap token.');
+                }
+            }
                 
         } else if($req->action === "utang"){
 
@@ -466,24 +485,34 @@ public function receiptTransaction2($id)
         $printer->close();
     }
 
-    // return back()->with('success', 'Nota berhasil dicetak.');
+    
 }
 
-// public function bismillah () {
+        public function createSnapToken(Transaction $transaksi)
+    {
+        $diskon = $transaksi->total_harga * $transaksi->diskon / 100;
+        $total = $transaksi->total_harga - $diskon;
 
+        $params = [
+            'transaction_details' => [
+                'order_id' => $transaksi->kode_transaksi,
+                'gross_amount' => $total,
+            ],
 
-// $connector = new WindowsPrintConnector("POS-58");
-// $printer = new Printer($connector);
+            'customer_details' => [
+                'first_name' => auth()->user()->nama,
+                'email' => auth()->user()->email
+            ]
 
-// $printer->setJustification(Printer::JUSTIFY_CENTER);
-// $printer->text("Toko ABC\n");
-// $printer->text("Jl. Contoh No.1\n");
-// $printer->feed();
-// $printer->text("Terima kasih!\n");
-// $printer->cut();
+        ];
 
-// $printer->close();
-// }
+        try {
+            $snapToken = Snap::getSnapToken($params);
+            return $snapToken;
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
 
 

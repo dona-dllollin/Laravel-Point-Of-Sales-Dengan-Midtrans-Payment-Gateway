@@ -195,60 +195,7 @@
 				</form>
 			</div>
 		</div>
-	{{-- </div> --}}
-	{{-- <div class="col-lg-4 col-md-12 col-sm-12">
-		<div class="row">
-			<div class="col-12 stretch-card bg-dark-blue">
-				<div class="card text-white card-noborder b-radius">
-					<div class="card-body">
-						<form action="{{ url('/product/import') }}" method="post" enctype="multipart/form-data">
-							@csrf
-							<div class="d-flex justify-content-between pb-2 align-items-center">
-			                  <h2 class="font-weight-semibold mb-0">Import</h2>
-			                  <input type="file" name="excel_file" hidden="" accept=".xls, .xlsx">
-			                  <a href="#" class="excel-file">
-			                  	<div class="icon-holder">
-				                   <i class="mdi mdi-upload"></i>
-				                </div>
-			                  </a>
-			                </div>
-			                <div class="d-flex justify-content-between">
-			                  <h5 class="font-weight-semibold mb-0">Upload file excel</h5>
-			                  <p class="text-white excel-name">Pilih File</p>
-			                </div>
-			                <button class="btn btn-block mt-3 btn-upload" type="submit" hidden="">Import Data</button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="col-12 mt-4">
-				<div class="card card-noborder b-radius">
-					<div class="card-body">
-						<h4 class="card-title mb-1">Langkah - Langkah Import</h4>
-	                    <div class="d-flex py-2 border-bottom">
-	                      <div class="wrapper">
-	                        <p class="font-weight-semibold text-gray mb-0">1. Siapkan data dengan format Excel (.xls atau .xlsx)</p>
-	                        <small class="text-muted">
-	                        	<a href="" role="button" class="link-how" data-toggle="modal" data-target="#formatModal">Selengkapnya</a>
-	                    	</small>
-	                      </div>
-	                    </div>
-	                    <div class="d-flex py-2 border-bottom">
-	                      <div class="wrapper">
-	                        <p class="font-weight-semibold text-gray mb-0">2. Jika sudah sesuai pilih file</p>
-	                      </div>
-	                    </div>
-	                    <div class="d-flex py-2">
-	                      <div class="wrapper">
-	                        <p class="font-weight-semibold text-gray mb-0">3. Klik simpan, maka data otomatis tersimpan</p>
-	                      </div>
-	                    </div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> --}}
-{{-- </div> --}}
+	
 @endsection
 @section('script')
 <script src="{{ asset('plugins/js/quagga.min.js') }}"></script>

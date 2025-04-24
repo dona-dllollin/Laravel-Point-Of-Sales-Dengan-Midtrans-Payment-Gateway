@@ -132,7 +132,6 @@ class ProductController extends Controller
             [
                 'nama_barang' => 'required',
                 'kode_barang' => 'required',
-                'stok' => 'required|integer',
                 'harga_beli' => 'required|numeric',
                 'harga_jual' => 'required|numeric',
                 'toko' => 'required',
@@ -149,12 +148,8 @@ class ProductController extends Controller
             $product->kode_barang = $request->kode_barang;
             $product->nama_barang = $request->nama_barang;
             $product->satuan =  $request->satuan_berat;
-            $product->stok = $request->stok;
-            if ($request->stok <= 0) {
-                $product->keterangan = "habis";
-            } else {
-                $product->keterangan = "tersedia";
-            }
+            // $product->stok = 0;
+            // $product->keterangan = "habis";
             $product->harga_beli = $request->harga_beli;
             $product->harga_jual = $request->harga_jual;
             $product->market_id = $request->toko;

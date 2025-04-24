@@ -124,14 +124,6 @@
                   @endif
                 </div>
               </div>
-
-              <div class="form-group row">
-                <label class="col-lg-3 col-md-3 col-sm-12 col-form-label font-weight-bold">Stok</label>
-                <div class="col-lg-9 col-md-9 col-sm-12">
-                  <input type="text" class="form-control number-input" name="stok" value="{{$product->stok}}">
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-12 offset-lg-3 offset-md-3 error-notice" id="stok_error"></div>
-              </div>
               
               <div class="form-group row">
                 <label class="col-lg-3 col-md-3 col-sm-12 col-form-label font-weight-bold">Kategori</label>
