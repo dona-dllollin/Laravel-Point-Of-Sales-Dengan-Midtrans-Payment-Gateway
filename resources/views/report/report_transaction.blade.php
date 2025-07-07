@@ -103,19 +103,11 @@
                   </div>
                   <div class="col-10 p-0 offset-col-1 input-group mb-2">
                     <input type="date" name="tgl_awal_export" class="form-control form-control-lg date" placeholder="Tanggal awal">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <i class="mdi mdi-calendar calendar-icon"></i>
-                      </div>
-                    </div>
+                    
                   </div>
                   <div class="col-10 p-0 offset-col-1 input-group">
                     <input type="date" name="tgl_akhir_export" class="form-control form-control-lg date" placeholder="Tanggal akhir">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <i class="mdi mdi-calendar calendar-icon"></i>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -131,6 +123,22 @@
                       <option value="pending" {{ $statusExport === 'pending' ? 'selected' : '' }}>Belum Lunas</option>
                     </select>
                   <div class="input-group-append">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group row">
+                  <div class="col-2  offset-col-1">
+                    <div class="form-radio">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="format" value="pdf" checked> pdf</label>
+                    </div>
+                  </div>
+                  <div class="col-2 ">
+                    <div class="form-radio">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="format" value="excel"> excel</label>
                     </div>
                   </div>
                 </div>
@@ -219,7 +227,7 @@
         	<div class="col-12">
             <ul class="list-date">
               @foreach($dates as $date)
-              <div class="product-item">
+            <div class="product-item">
               <li class="txt-light">{{ date('d M, Y', strtotime($date)) }}</li>
               {{-- <h4>{{ \Carbon\Carbon::parse($date)->format('d M Y') }}</h4> --}}
               <div class="table-responsive">
@@ -229,6 +237,7 @@
                     <th>Total</th>
                     <th>Bayar</th>
                     <th>Kembali</th>
+                    <th>Metode</th>
                     <th>status</th>
                     <th></th>
                   </tr>
@@ -241,6 +250,7 @@
                     <td><span class="ammount-box bg-green"><i class="mdi mdi-coin"></i></span>Rp. {{ number_format($trx->total,2,',','.') }}</td>
                     <td class="text-success font-weight-bold">- Rp. {{ number_format($trx->bayar,2,',','.') }}</td>
                     <td>Rp. {{ number_format($trx->kembali,2,',','.') }}</td>
+                    <td>{{ $trx->metode}}</td>
                     <td class="text-center">
                       @if($trx->status == 'completed')
                       <span class="btn tersedia-span">Lunas</span>

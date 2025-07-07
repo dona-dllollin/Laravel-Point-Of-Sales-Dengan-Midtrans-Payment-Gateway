@@ -21,11 +21,11 @@ class DebtPayment extends Model
     return $this->belongsTo(Debt::class);
 }
 
-// Di model DebtPayment.php
+
 protected static function booted()
 {
     static::created(function ($payment) {
-        // Ambil data debt terkait
+       
         $debt = $payment->debt;
 
         if ($debt) {

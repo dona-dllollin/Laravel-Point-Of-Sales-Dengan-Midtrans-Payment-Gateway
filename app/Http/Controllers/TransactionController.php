@@ -26,7 +26,7 @@ class TransactionController extends Controller
     public function __construct()
     {
         \Midtrans\Config::$serverKey = config('midtrans.server_key');
-        \Midtrans\Config::$isProduction = false; // Set true jika production
+        \Midtrans\Config::$isProduction = false; 
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
     }
@@ -46,10 +46,6 @@ class TransactionController extends Controller
             $totalQuantity += $item['quantity']; // Menjumlahkan quantity setiap item
         }
 
-
-        if ($user->role === 'admin') {
-
-            // Mulai query produk
             $products = Product::query();
 
             // Filter berdasarkan kategori
@@ -59,25 +55,10 @@ class TransactionController extends Controller
                 });
             }
 
-            // Filter berdasarkan toko jika role admin
-            if (auth()->user()->role === 'admin' && $request->has('market_id') && $request->market_id != 'all') {
-                $products->where('market_id', $request->market_id);
-            }
-
             // Ambil produk berdasarkan filter
             $products = $products->get();
-        } else if ($user->role === 'kasir') {
-            $products = Product::where('market_id', $user->market_id);
+       
 
-            // Filter berdasarkan kategori untuk kasir
-            if ($request->has('category_id') && $request->category_id != 'all') {
-                $products->whereHas('categories', function ($query) use ($request) {
-                    $query->where('categories.id', $request->category_id);
-                });
-            }
-
-            $products = $products->get();
-        }
 
         return view('transaction/index', compact('products', 'categories', 'markets', 'totalQuantity', 'totalSubtotal'));
     }
@@ -93,16 +74,16 @@ class TransactionController extends Controller
         $cart = session()->get('cart', []);
 
         $jumlahStok = $product->stok - (isset($cart[$product->id]) ? $cart[$product->id]['quantity'] : 0);
-        // Jika barang sudah ada di keranjang, tambahkan jumlahnya
+       
         if ($jumlahStok > 0) {
 
             if (isset($cart[$product->id])) {
                 $cart[$product->id]['quantity']++;
-                $cart[$product->id]['subtotal'] = $cart[$product->id]['price'] * $cart[$product->id]['quantity']; // Hitung subtotal
+                $cart[$product->id]['subtotal'] = $cart[$product->id]['price'] * $cart[$product->id]['quantity']; 
 
             } else {
 
-                // Jika belum ada, tambahkan barang ke keranjang
+               
                 $cart[$product->id] = [
                     "name" => $product->nama_barang,
                     "price" => $product->harga_jual,
@@ -112,13 +93,13 @@ class TransactionController extends Controller
                 ];
             }
 
-            // Simpan kembali ke session
+            
             session()->put('cart', $cart);
-            // session()->forget('cart');
+       
 
             $jumlahStok = $product->stok - (isset($cart[$product->id]) ? $cart[$product->id]['quantity'] : 0);
 
-            // Kirim respons JSON
+           
             return response()->json([
                 'success' => true,
                 'message' => 'Barang berhasil ditambahkan ke keranjang!',
@@ -144,7 +125,7 @@ class TransactionController extends Controller
             $cart[$id]['quantity']--;
             $cart[$id]['subtotal'] = $cart[$id]['price'] * $cart[$id]['quantity'];
 
-            // Jika quantity mencapai 0, hapus item
+      
             if ($cart[$id]['quantity'] <= 0) {
                 unset($cart[$id]);
             }
@@ -222,7 +203,7 @@ class TransactionController extends Controller
         
         if ($product) {
             $jumlahStok = $product->stok - (isset($cart[$product->id]) ? $cart[$product->id]['quantity'] : 0);
-            // Jika barang sudah ada di keranjang, tambahkan jumlahnya
+           
             if ($jumlahStok > 0) {
 
                 if (isset($cart[$product->id])) {
@@ -231,7 +212,7 @@ class TransactionController extends Controller
 
                 } else {
 
-                    // Jika belum ada, tambahkan barang ke keranjang
+               
                     $cart[$product->id] = [
                         "name" => $product->nama_barang,
                         "price" => $product->harga_jual,
@@ -241,12 +222,12 @@ class TransactionController extends Controller
                     ];
                 }
 
-                // Simpan kembali ke session
+           
                 session()->put('cart', $cart);
-                // session()->forget('cart');
+             
 
                 $jumlahStok = $product->stok - (isset($cart[$product->id]) ? $cart[$product->id]['quantity'] : 0);
-                // Kirim respons JSON
+              
                 return response()->json([
                     'success' => true,
                     'message' => 'Barang berhasil ditambahkan ke keranjang!',
@@ -316,7 +297,7 @@ class TransactionController extends Controller
                 }
             }
 
-            // Hapus data keranjang di session
+         
             session()->forget('cart');
             if ($req->payment_method === 'Tunai') {
                 DB::commit();
@@ -364,7 +345,6 @@ class TransactionController extends Controller
                     }
                 }
 
-                // Simpan data utang
                 $utang = Debt::create([
                     'transaction_id' => $transaksi->id,
                     'nama_pengutang' => $req->nama_pengutang,
@@ -375,7 +355,7 @@ class TransactionController extends Controller
                 ]);
 
 
-                // Hapus data keranjang di session
+            
                 session()->forget('cart');
 
                 DB::commit();
@@ -390,6 +370,7 @@ class TransactionController extends Controller
         }
     }
 
+    // Fungsi untuk mencetak nota transaksi
     public function receiptTransaction($id)
     {
         $transaction = Transaction::find($id);
@@ -404,7 +385,7 @@ class TransactionController extends Controller
 
  
 
-
+// Fungsi untuk mencetak nota transaksi dengan printer thermal
 public function receiptTransaction2($id)
 {
     $transaction = Transaction::find($id);
@@ -488,6 +469,7 @@ public function receiptTransaction2($id)
     
 }
 
+    // Fungsi untuk membuat Snap Token Midtrans
         public function createSnapToken(Transaction $transaksi)
     {
         $diskon = $transaksi->total_harga * $transaksi->diskon / 100;

@@ -15,7 +15,6 @@ class Market extends Model
     protected $fillable = [
         'nama_toko',
         'slug',
-        'kas',
         'no_telp',
         'alamat'
     ];

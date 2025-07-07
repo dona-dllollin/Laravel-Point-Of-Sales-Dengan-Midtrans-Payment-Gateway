@@ -8,6 +8,8 @@ use Midtrans\Snap;
 
 class PaymentController extends Controller
 {
+
+    // callback midtrans
     public function handleCallback(Request $request)
     {
 
@@ -24,11 +26,7 @@ class PaymentController extends Controller
         $transactionStatus = $request->transaction_status;
 
         $transaction = Transaction::where('kode_transaksi', $data['order_id'])->first();
-        // if ($transaction) {
-        //     $transaction->update([
-        //         'status' => $data['transaction_status'] === 'settlement' ? 'completed' : 'pending',
-        //     ]);
-        // }
+      
 
         if (!$transaction) {
             return response()->json(['message' => 'Order not found'], 404);

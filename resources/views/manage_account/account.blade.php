@@ -234,7 +234,7 @@
 
         swal({
       title: "Apa Anda Yakin?",
-      text: "Data satuan akan terhapus, klik oke untuk melanjutkan",
+      text: "Data user akan terhapus, klik oke untuk melanjutkan",
       icon: "warning",
       buttons: true,
       dangerMode: true,

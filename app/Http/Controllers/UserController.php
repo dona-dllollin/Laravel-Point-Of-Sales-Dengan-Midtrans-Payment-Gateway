@@ -40,7 +40,6 @@ class UserController extends Controller
     $validator = Validator::make($request->all(), $rules, $messages);
     if ($validator->fails()) {
         $filteredData = $request->except('foto');
-        // Mode edit atau tambah berdasarkan apakah ada 'id'
         session()->flash('modal_data', $filteredData);
 
         return redirect()->back()->withErrors($validator);
@@ -49,11 +48,10 @@ class UserController extends Controller
 
     // Cek apakah user upload foto baru
     if ($request->hasFile('foto')) {
-        // Ada file baru di-upload, proses simpan
         $foto = $request->file('foto');
         $filename = time() . '_' . $foto->getClientOriginalName();
     
-        // Hapus foto lama kalau bukan default
+
         if ($user->foto && $user->foto !== 'default.png') {
             $oldPath = public_path('pictures/acounts/' . $user->foto);
             if (file_exists($oldPath)) {
@@ -64,7 +62,6 @@ class UserController extends Controller
         $foto->move(public_path('pictures/acounts'), $filename);
     }
     elseif ($request->input('nama_foto') === 'default.png') {
-        // User klik tombol hapus, jadi kita ganti ke default
         if ($user->foto && $user->foto !== 'default.png') {
             $oldPath = public_path('pictures/acounts/' . $user->foto);
             if (file_exists($oldPath)) {
@@ -75,7 +72,6 @@ class UserController extends Controller
         $filename = 'default.png';
     }
     else {
-        // Tidak ada perubahan foto
         $filename = $user->foto;
     }
     

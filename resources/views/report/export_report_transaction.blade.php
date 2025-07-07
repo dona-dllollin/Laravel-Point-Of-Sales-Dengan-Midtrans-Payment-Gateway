@@ -175,7 +175,7 @@ $nama_user = $nama_users[0];
 			<table class="w-100 mb-4">
 				<thead>
 					<tr>
-						<td colspan="5"></td>
+						<td colspan="7"></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -196,6 +196,10 @@ $nama_user = $nama_users[0];
 						<td>
 							<span class="text-10 txt-light d-block">Kembali</span>
 							<span class="txt-dark text-12 d-block">Rp. {{ number_format($transaction->kembali,2,',','.') }}</span>
+						</td>
+						<td>
+							<span class="text-10 txt-light d-block">Metode</span>
+							<span class="txt-dark text-12 d-block">{{ $transaction->metode }}</span>
 						</td>
 						<td>
 							<span class="text-10 txt-light d-block">Status</span>

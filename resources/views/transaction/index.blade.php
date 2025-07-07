@@ -153,7 +153,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-sm btn-close-modal" data-dismiss="modal">Tutup</button>
-          <a href="{{ url('/transaction/receipt/' . $message->id) }}" target="_blank" class="btn btn-sm btn-cetak-pdf">Cetak Struk</a>
+          <a href="{{ url('/transaction/cetak/' . $message->id) }}" target="_blank" class="btn btn-sm btn-cetak-pdf">Cetak Struk</a>
         </div>
       </div>
     </div>

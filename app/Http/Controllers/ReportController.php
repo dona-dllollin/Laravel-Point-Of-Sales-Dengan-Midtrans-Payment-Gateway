@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanPenjualanExport;
 use App\Models\Market;
 use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -134,6 +136,10 @@ public function exportTransaction(Request $req)
     $tgl_awal_judul = Carbon::parse($tgl_awal)->format('Y-m-d');
     $tgl_akhir_judul = Carbon::parse($tgl_akhir)->format('Y-m-d');
     $status_judul =  $statusExport == 'all' ? 'Semua' : ($statusExport == 'completed' ? 'Lunas' : 'Belum_Lunas');
+
+    if ($req->input('format') === 'excel') {
+        return Excel::download(new LaporanPenjualanExport($tgl_awal, $tgl_akhir, $statusExport, $transactions, $pemasukan, $market), "laporan-pemasukan-{$tgl_awal_judul}-sampai-{$tgl_akhir_judul}-status-{$status_judul}.xlsx");
+    }
 
     return $pdf->stream("laporan_pemasukan_{$tgl_awal_judul}_sampai_{$tgl_akhir_judul}_status_{$status_judul}.pdf", [
         'Attachment' => false

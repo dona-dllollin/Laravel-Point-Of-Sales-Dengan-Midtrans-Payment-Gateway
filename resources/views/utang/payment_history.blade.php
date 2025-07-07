@@ -110,19 +110,11 @@
                   </div>
                   <div class="col-10 p-0 offset-col-1 input-group mb-2">
                     <input type="date" name="tgl_awal_export" class="form-control form-control-lg date" placeholder="Tanggal awal">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <i class="mdi mdi-calendar calendar-icon"></i>
-                      </div>
-                    </div>
+                    
                   </div>
                   <div class="col-10 p-0 offset-col-1 input-group">
                     <input type="date" name="tgl_akhir_export" class="form-control form-control-lg date" placeholder="Tanggal akhir">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <i class="mdi mdi-calendar calendar-icon"></i>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -138,6 +130,22 @@
                       <option value="pending" {{ $statusExport === 'pending' ? 'selected' : '' }}>Belum Lunas</option>
                     </select>
                   <div class="input-group-append">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group row">
+                  <div class="col-2  offset-col-1">
+                    <div class="form-radio">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="format" value="pdf" checked> pdf</label>
+                    </div>
+                  </div>
+                  <div class="col-2 ">
+                    <div class="form-radio">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="format" value="excel"> excel</label>
                     </div>
                   </div>
                 </div>

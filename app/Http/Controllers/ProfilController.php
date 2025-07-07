@@ -72,10 +72,9 @@ public function changePicture(Request $req)
         $extension = $foto->getClientOriginalExtension();
         $filename = 'foto_' . time() . '_' . uniqid() . '.' . $extension;
 
-        // Simpan file
+      
         $foto->move($path, $filename);
 
-        // Update field foto
         $user->update([
             'foto' => $filename
         ]);

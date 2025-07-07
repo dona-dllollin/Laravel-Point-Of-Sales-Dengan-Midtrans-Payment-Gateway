@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanAngsuranUtangExport;
+use App\Exports\LaporanUtangExport;
 use App\Models\Debt;
 use App\Models\DebtPayment;
 use App\Models\Market;
@@ -9,6 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DebtController extends Controller
 {
@@ -139,6 +142,10 @@ public function exportUtang(Request $req)
     $tgl_akhir_judul = Carbon::parse($tgl_akhir)->format('Y-m-d');
     $status_judul =  $statusExport == 'all' ? 'Semua' : ($statusExport == 'completed' ? 'Lunas' : 'Belum_Lunas');
 
+    if($req->input('format') == 'excel'){
+        return Excel::download(new LaporanUtangExport($tgl_awal, $tgl_akhir, $statusExport, $debts, $totalAngsuran, $totalSisa, $totalUtang, $market), "laporan-utang-{$tgl_awal_judul}-sampai-{$tgl_akhir_judul}.xlsx");
+    }
+
     return $pdf->stream("laporan_utang_{$tgl_awal_judul}_sampai_{$tgl_akhir_judul}_status_{$status_judul}.pdf", [
         'Attachment' => false
     ]);
@@ -257,6 +264,11 @@ public function exportAngsuran(Request $req)
     $tgl_awal_judul = Carbon::parse($tgl_awal)->format('Y-m-d');
     $tgl_akhir_judul = Carbon::parse($tgl_akhir)->format('Y-m-d');
     $status_judul =  $statusExport == 'all' ? 'Semua' : ($statusExport == 'completed' ? 'Lunas' : 'Belum_Lunas');
+
+    if($req->input('format') == 'excel'){
+        return Excel::download(new LaporanAngsuranUtangExport($tgl_awal, $tgl_akhir, $statusExport, $debtPayments, $totalAngsuran, $market), "laporan-utang-{$tgl_awal_judul}-sampai-{$tgl_akhir_judul}.xlsx");
+    }
+
 
     return $pdf->stream("laporan_angsuran_utang_{$tgl_awal_judul}_sampai_{$tgl_akhir_judul}_status_{$status_judul}.pdf", [
         'Attachment' => false

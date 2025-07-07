@@ -121,7 +121,7 @@
 										<div class="col-12 error-notice" id="nama_error"></div>
 									</div>
 									<div class="form-group row top-min">
-										<label class="col-12 font-weight-bold col-form-label">Harga Satuan barang</label>
+										<label class="col-12 font-weight-bold col-form-label">Harga Satuan Lama</label>
 										<div class="col-12">
 											<input type="text" class="form-control number-input input-notzero" name="harga_satuan" readonly="">
 										</div>
@@ -143,7 +143,7 @@
 										<div class="col-12 error-notice" id="jumlah_error"></div>
 									</div>
 									<div class="form-group row top-min">
-										<label class="col-12 font-weight-bold col-form-label">Harga Satuan (Opsional)</label>
+										<label class="col-12 font-weight-bold col-form-label">Harga Satuan Baru (Opsional)</label>
 										<div class="col-12">
 											<div class="input-group">
 												<div class="input-group-prepend">
@@ -327,16 +327,16 @@ $(document).on("click", ".btn-simpan", function () {
     }
 
     $.ajax({
-        url: "{{ url('/supply/store') }}", // Endpoint Laravel
+        url: "{{ url('/supply/store') }}", 
         method: "POST",
         data: {
-            _token: "{{ csrf_token() }}", // Token CSRF untuk Laravel
-            supply: supplyData, // Kirim data JSON
+            _token: "{{ csrf_token() }}", 
+            supply: supplyData, 
         },
         success: function (response) {
             swal("", "Data berhasil disimpan!", "success");
-            localStorage.removeItem("supply"); // Hapus data setelah disimpan
-            $("tbody").empty(); // Kosongkan tabel
+            localStorage.removeItem("supply"); 
+            $("tbody").empty(); 
             $(".btn-simpan").prop("hidden", true);
         },
         error: function () {

@@ -22,14 +22,14 @@ class ProductController extends Controller
     {
         $kategori = Categories::all();
         $toko = Market::all();
-        $filter = $request->query('filter', 'kode_barang');
+        $filter = $request->query('filter', 'created_at'); // Default filter is 'created_at'
         $satuans = Satuan::all();
         $user = Auth::user();
         if ($user->role === 'admin') {
 
-            $products = Product::orderBy($filter)->get();
+            $products = Product::orderBy($filter, 'desc')->get();
         } elseif ($user->role === 'kasir') {
-            $products = Product::where('market_id', $user->market_id)->orderBy($filter)->paginate(20);
+            $products = Product::where('market_id', $user->market_id)->orderBy($filter, 'desc')->get();
         } else {
             return back();
         }
@@ -63,8 +63,15 @@ class ProductController extends Controller
             ],
             [
                 'nama_barang.required' => 'nama barang harus diisi',
+                'kode_barang.required' => 'kode barang harus diisi',
+                'harga_beli.required' => 'harga beli harus diisi',
+                'harga_jual.required' => 'harga jual harus diisi',
+                'harga_beli.numeric' => 'harga beli harus angka',
+                'harga_jual.numeric' => 'harga jual harus angka',
+                
 
             ]
+
         );
 
         if ($request->hasFile('image')) {

@@ -67,6 +67,7 @@ class AuthController extends Controller
                 'password' => 'required|min:8'
             ],
             [
+                'email.unique' => 'email sudah digunakan',
                 'no_karyawan.unique' => 'nomor karyawan sudah digunakan'
             ]
         );
@@ -94,7 +95,6 @@ class AuthController extends Controller
         $checkKaryawan = Karyawan::where('no_karyawan', $request->input('no_karyawan'))->first();
 
         if (!$checkKaryawan) {
-            // Langkah 2: Jika karyawan tidak ditemukan
             return back()->with('error', 'karyawan dengan nomor ' . $request->input('no_karyawan') . 'tidak ditemukan')->withInput();
         }
 

@@ -16,6 +16,7 @@ class CategoryController extends Controller
         return view('satuan&kategori.kategori', compact('categories'));
     }
 
+    // Fungsi untuk menampilkan modal tambah kategori
     public function create(Request $req)
     {
         $roles = [
@@ -63,6 +64,7 @@ class CategoryController extends Controller
         return back()->with('success', 'data kategori berhasil dibuat');
     }
 
+    // Fungsi untuk mengupdate kategori
     public function edit(Request $req)
     {
         $roles = [
@@ -110,7 +112,6 @@ class CategoryController extends Controller
                 }
             }
 
-            // Simpan gambar baru
             $image = $req->file('gambar');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('pictures/'), $imageName);
@@ -128,34 +129,34 @@ class CategoryController extends Controller
 
 
 
+    // Fungsi untuk menghapus kategori
     public function delete($id)
     {
-        // Temukan kategori berdasarkan ID
+      
         $kategori = Categories::find($id);
 
-        // Jika kategori tidak ditemukan, kembalikan pesan error
+       
         if (!$kategori) {
             Session::flash('error', 'Data kategori tidak ditemukan');
             return redirect()->back();
         }
 
-        // Jika gambar bukan default, hapus file gambar dari folder
+    
         if ($kategori->gambar !== 'default.jpg') {
             $gambarPath = public_path('pictures/' . $kategori->gambar);
 
-            // Periksa apakah file gambar ada di folder
+     
             if (file_exists($gambarPath)) {
-                unlink($gambarPath); // Hapus file gambar
+                unlink($gambarPath); 
             }
         }
 
-        // Hapus relasi di tabel pivot
+   
         $kategori->products()->detach();
 
-        // Hapus data kategori
         $kategori->delete();
 
-        // Tampilkan pesan sukses
+    
         Session::flash('success', 'Data kategori berhasil dihapus');
 
         return redirect()->back();

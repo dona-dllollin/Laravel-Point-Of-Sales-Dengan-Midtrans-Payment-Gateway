@@ -32,15 +32,6 @@
             </tr>
             <tr>
                 <td>
-                    Kas
-                </td>
-                <td>:</td>
-                <td>
-                    {{$item->kas}}
-                </td>
-            </tr>
-            <tr>
-                <td>
                     Nomor HP
                 </td>
                 <td>:</td>
@@ -104,12 +95,6 @@
                   </div>
                 </div>
                 
-                <div class="form-group row">
-                  <label class="col-lg-3 col-md-3 col-sm-12 col-form-label font-weight-bold">Kas</label>
-                  <div class="col-lg-9 col-md-9 col-sm-12">
-                    <input type="text" class="form-control" name="kas" id="kas" value="{{old('kas')}}">
-                  </div>
-                </div>
                 
                 <div class="form-group row">
                   <label class="col-lg-3 col-md-3 col-sm-12 col-form-label font-weight-bold">Nomor Telepon</label>
@@ -153,7 +138,6 @@
                 <thead>
                     <tr>
                         <th>Nama Toko</th>
-                        <th>Kas</th>
                         <th>Nomor HP</th>
                         <th>Alamat</th>
                         <th>Aksi</th>
@@ -163,14 +147,12 @@
                     @foreach ($markets as $item)
                     <tr>
                         <td>{{$item->nama_toko}}</td>
-                        <td>{{$item->kas}}</td>
                         <td>{{$item->no_telp}}</td>
                         <td>{{$item->alamat}}</td>
                         <td>
                             <button type="button" class="btn btn-edit btn-icons btn-rounded btn-secondary btnEdit" style="background-color: yellow"
                               data-id="{{ $item->id }}" 
                               data-nama_toko="{{ $item->nama_toko }}"
-                              data-kas="{{ $item->kas }}"
                               data-no_telp="{{ $item->no_telp }}"
                               data-alamat="{{ $item->alamat }}"
                               >
@@ -220,16 +202,9 @@
                 $('#modalSubmit').text('Update');
                 $('#tokoId').val('{{ session('modal_data.id') }}');
                 $('#nama_toko').val('{{ session('modal_data.nama_toko') }}');
-                $('#kas').val('{{ session('modal_data.kas') }}');
                 $('#no_telp').val('{{ session('modal_data.no_telp') }}');
                 $('#alamat').val('{{ session('modal_data.alamat') }}');
-            @else
-                // Jika mode tambah
-                $('#tokoForm').attr('action', '/toko'); // URL untuk tambah
-                $('#method').val('POST'); // Method untuk tambah
-                $('#modalTitle').text('Tambah Toko');
-                $('#modalSubmit').text('Tambah');
-                $('#tokoForm')[0].reset(); // Reset form
+          
             @endif
             $('#tokoModal').modal('show');
         });
@@ -239,17 +214,7 @@
 
 <script>
   $(document).ready(function () {
-    // Fungsi untuk membuka modal tambah
-    $('.btnTambah').click(function (e) {
-        e.preventDefault()
-        $('#tokoForm').attr('action', '/toko'); // URL untuk tambah
-        $('#method').val('POST'); // Method untuk tambah
-        $('#modalTitle').text('Tambah Toko');
-        $('#modalSubmit').text('Tambah');
-        $('#tokoForm')[0].reset(); // Reset semua field
-        $('#tokoModal').modal('show');
-    });
-
+  
     // Fungsi untuk membuka modal edit
     $('.btnEdit').click(function () {
         const id = $(this).data('id');
@@ -257,7 +222,7 @@
         
         // Ambil data karyawan dari tombol edit
         const nama_toko = $(this).data('nama_toko');
-        const kas = $(this).data('kas');
+      
         const no_telp = $(this).data('no_telp');
         const alamat = $(this).data('alamat');
 
@@ -268,7 +233,7 @@
         $('#modalSubmit').text('Update');
         $('#tokoId').val(id);
         $('#nama_toko').val(nama_toko);
-        $('#kas').val(kas);
+      
         $('#no_telp').val(no_telp);
         $('#alamat').val(alamat);
 

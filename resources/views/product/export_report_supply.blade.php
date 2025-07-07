@@ -171,7 +171,7 @@ $nama_user = $nama_users[0];
 						<td>Harga</td>
 						<td>Total</td>
 						<td>pelaku</td>
-						{{-- <td>Pemasok</td> --}}
+						
 					</tr>
 				</thead>
 				<tbody>

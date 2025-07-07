@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Laporan Pemasukan ({{ date('d M, Y', strtotime($tgl_awal)) . ' - ' . date('d M, Y', strtotime($tgl_akhir))}})</title>
+	<title>Laporan Angsuran Utang ({{ date('d M, Y', strtotime($tgl_awal)) . ' - ' . date('d M, Y', strtotime($tgl_akhir))}})</title>
 	<style type="text/css">
 		html{
 			font-family: "Arial", sans-serif;
@@ -156,7 +156,7 @@ $nama_user = $nama_users[0];
 					<p class="text-10 txt-dark d-block">{{ $market->no_telp }}</p>
 				</td>
 				<td class="text-right">
-					<p class="text-20 txt-blue font-bold">LAPORAN UTANG</p>
+					<p class="text-20 txt-blue font-bold">LAPORAN ANGSURAN UTANG</p>
 				</td>
 			</tr>
 			<tr>
@@ -205,7 +205,9 @@ $nama_user = $nama_users[0];
 						</td>
 					
 						<td>
-							{{$debt->dibayar_oleh}}
+							<span class="text-12 txt-dark2 d-block">
+								{{$debt->dibayar_oleh}}
+							</span>
 						</td>
 						<td>
 							@if($debt->debt->status == 'lunas')

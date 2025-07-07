@@ -20,7 +20,6 @@ class Product extends Model
         'stok',
         'harga_beli',
         'harga_jual',
-        'pemasok_id',
         'keterangan',
         'market_id'
     ];
@@ -30,7 +29,11 @@ class Product extends Model
     {
         return $this->belongsTo(Market::class, 'market_id');
     }
-
+    
+    public function satuanId(): BelongsTo
+    {
+        return $this->belongsTo(Satuan::class, 'satuan', 'id');
+    }
 
     public function categories()
     {

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Supply extends Model
 {
+
+
     use HasFactory;
 
     public $table = 'supplies';
@@ -17,7 +19,6 @@ class Supply extends Model
         'product_id',
         'harga_beli',
         'jumlah',
-        'pemasok',
         'user_id'
         
     ];
@@ -31,4 +32,5 @@ class Supply extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
 }

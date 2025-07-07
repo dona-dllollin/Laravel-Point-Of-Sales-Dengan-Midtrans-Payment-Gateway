@@ -71,9 +71,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaction/cetak/{id}', [TransactionController::class, 'receiptTransaction']);
     Route::get('/transaction/bismillah', [TransactionController::class, 'bismillah']);
 
-    // report
-    Route::get('/report/transaction', [ReportController::class, 'reportTransaction'])->name('report.transaction');
-    Route::post('/report/transaction/export', [ReportController::class, 'exportTransaction'])->name('report.transaction.export');
+    
 
     //Debt
     Route::get('/debt', [DebtController::class, 'index']);
@@ -98,6 +96,10 @@ Route::middleware(['auth', 'role:admin', 'check.toko', 'inject.toko'])->group(fu
     Route::post('/product/delete/{id}', [ProductController::class, 'deleteProduct']);
     Route::get('/product/new', [ProductController::class, 'viewNewProduct']);
     Route::get('/transaksi', [TransactionController::class, 'index'])->name('admin.transaction');
+
+    // report
+    Route::get('/report/transaction', [ReportController::class, 'reportTransaction'])->name('report.transaction');
+    Route::post('/report/transaction/export', [ReportController::class, 'exportTransaction'])->name('report.transaction.export');
 
     //karyawan
     Route::get('/karyawan', [KaryawanController::class, 'index'])->name('admin.karyawan');

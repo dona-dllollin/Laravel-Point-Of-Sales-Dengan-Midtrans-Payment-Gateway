@@ -95,14 +95,14 @@
                 <label class="col-lg-3 col-md-3 col-sm-12 col-form-label font-weight-bold">Satuan Barang</label>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                   <div class="input-group">
-                    @php
+                    {{-- @php
                        $satuan = explode(" ", $product->satuan)
-                    @endphp
+                    @endphp --}}
                       {{-- <input type="text" class="form-control number-input input-notzero" name="satuan" value="{{$satuan[0]}}"> --}}
                       {{-- <div class="input-group-append"> --}}
                         <select class="form-control" name="satuan_berat">
                           @foreach ($satuans as $item)           
-                          <option value="{{$item->nama}}" {{$item->nama == $product->satuan ? 'selected' : ''}}>{{$item->nama}}</option>
+                          <option value="{{$item->id}}" {{$item->id == $product->satuan ? 'selected' : ''}}>{{$item->nama}}</option>
                           @endforeach
                         </select>
                       {{-- </div> --}}
@@ -215,7 +215,7 @@
             </tr>
             <tr>
               <th scope="row">Satuan</th>
-              <td>{{ $product->satuan }}</td>
+              <td>{{ $product->satuanId->nama ?? '-' }}</td>
             </tr>
             <tr>
               <th scope="row">Stok</th>

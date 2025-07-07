@@ -1,7 +1,7 @@
 @extends('templates/main')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/manage_product/supply_product/supply/style.css') }}">
-<link rel="stylesheet" href="{{ asset('css/manage_product/supply_product/statistics_supply/style.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/manage_product/supply_product/statistics_supply/style.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/manage_product/product/pagination.css') }}">
 @endsection
 @section('content')
@@ -10,9 +10,7 @@
     <div class="page-header d-flex justify-content-between align-items-center">
       <h4 class="page-title">Riwayat Pasok</h4>
       <div class="d-flex justify-content-start">
-        {{-- <a href="" class="btn btn-icons btn-inverse-primary btn-filter shadow-sm ml-2">
-          <i class="mdi mdi-poll"></i>
-        </a> --}}
+        @if(Auth::user()->role == 'admin')
         <div class="print-btn-group">
           <div class="input-group">
             <div class="input-group-prepend">
@@ -23,6 +21,7 @@
             </div>
           </div>
         </div>
+        @endif
         <div class="dropdown dropdown-search">
           <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm ml-2" type="button" id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="mdi mdi-magnify"></i>
@@ -42,7 +41,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row modal-group">
 
   <div class="modal fade" id="cetakModal" tabindex="-1" role="dialog" aria-labelledby="cetakModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -100,6 +99,22 @@
                   </div>
                   <div class="col-10 p-0 offset-col-1 input-group">
                     <input type="date" name="tgl_akhir_export" class="form-control form-control-lg date" placeholder="Tanggal akhir">
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group row">
+                  <div class="col-2  offset-col-1">
+                    <div class="form-radio">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="format" value="pdf" checked> pdf</label>
+                    </div>
+                  </div>
+                  <div class="col-2 ">
+                    <div class="form-radio">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="format" value="excel"> excel</label>
+                    </div>
                   </div>
                 </div>
               </div>

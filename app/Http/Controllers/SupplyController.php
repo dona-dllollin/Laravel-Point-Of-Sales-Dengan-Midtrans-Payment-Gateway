@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanPengeluaranExport;
 use App\Models\Market;
-use App\Models\Pengeluaran;
 use App\Models\Product;
 use App\Models\Supply;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SupplyController extends Controller
 {
@@ -81,19 +82,12 @@ class SupplyController extends Controller
                 'product_id' => $product->id,
                 'harga_beli' => $supply['harga_beli'] ?? null, // Simpan null jika harga kosong
                 'jumlah' => $supply['jumlah'],
-                'pemasok' => $supply['pemasok'] ?? null, // Pastikan input memiliki pemasok
                 'user_id' => auth()->id(),
             ]);
 
             // $satuan = explode(' ', $product->satuan)[1] ?? '';
 
-            Pengeluaran::create([
-                'user_id' => auth()->id(),
-                'kategori' => 'tambah stok barang',
-                'deskripsi' => 'Pengeluaran untuk supply produk ' . $product->nama_barang . ' sebanyak ' . $supply['jumlah'] . ' ' . $product->satuan,
-                'jumlah' => $supply['jumlah'] * $supply['harga_beli'],
-            ]);
-           
+          
 
             // Update stok dan keterangan produk
             $updateData = [
@@ -167,6 +161,10 @@ public function exportSupply(Request $req)
 
     $tgl_awal_judul = Carbon::parse($tgl_awal)->format('Y-m-d');
     $tgl_akhir_judul = Carbon::parse($tgl_akhir)->format('Y-m-d');
+
+    if($req->input('format') == 'excel'){
+        return Excel::download(new LaporanPengeluaranExport($tgl_awal, $tgl_akhir, $supplies, $pengeluaran, $market), "laporan-pengeluaran-{$tgl_awal_judul}-sampai-{$tgl_akhir_judul}.xlsx");
+    }
 
     return $pdf->stream("laporan_pengeluaran_{$tgl_awal_judul}_sampai_{$tgl_akhir_judul}.pdf", [
         'Attachment' => false,

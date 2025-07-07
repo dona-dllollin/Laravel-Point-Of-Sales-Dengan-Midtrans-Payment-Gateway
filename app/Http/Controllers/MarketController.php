@@ -17,45 +17,45 @@ class MarketController extends Controller
         return view('market.index', compact('markets'));
     }
 
-    public function create(Request $req)
-    {
-        // Definisikan aturan validasi
-        $rules = [
-            'nama_toko' => 'required|string|max:100|unique:markets,nama_toko',
-            'no_telp' => 'required|max:15',
-            'alamat' => 'required',
-        ];
+    // public function create(Request $req)
+    // {
+      
+    //     $rules = [
+    //         'nama_toko' => 'required|string|max:100|unique:markets,nama_toko',
+    //         'no_telp' => 'required|max:15',
+    //         'alamat' => 'required',
+    //     ];
 
-        // Definisikan pesan error custom
-        $messages = [
-            'nama_toko.required' => 'Nama toko wajib diisi',
-            'nama_toko.unique' => 'Nama toko sudah digunakan',
-            'no_telp.required' => 'Nomor telepon wajib diisi',
-            'alamat.required' => 'Alamat wajib diisi',
-        ];
+      
+    //     $messages = [
+    //         'nama_toko.required' => 'Nama toko wajib diisi',
+    //         'nama_toko.unique' => 'Nama toko sudah digunakan',
+    //         'no_telp.required' => 'Nomor telepon wajib diisi',
+    //         'alamat.required' => 'Alamat wajib diisi',
+    //     ];
 
-        $validator = Validator::make($req->all(), $rules, $messages);
+    //     $validator = Validator::make($req->all(), $rules, $messages);
 
-        if ($validator->fails()) {
-            // Mode edit atau tambah berdasarkan apakah ada 'id'
-            session()->flash('modal_mode', $req->id !== null ? 'edit' : 'add');
-            session()->flash('modal_data', $req->all());
+    //     if ($validator->fails()) {
+    //         // Mode edit atau tambah berdasarkan apakah ada 'id'
+    //         session()->flash('modal_mode', $req->id !== null ? 'edit' : 'add');
+    //         session()->flash('modal_data', $req->all());
 
-            return redirect()->back()->withErrors($validator);
-        }
+    //         return redirect()->back()->withErrors($validator);
+    //     }
 
 
 
-        Market::create([
-            'nama_toko' => $req->nama_toko,
-            'slug' => Str::slug($req->nama_toko),
-            'kas' => $req->kas,
-            'no_telp' => $req->no_telp,
-            'alamat' => $req->alamat
-        ]);
+    //     Market::create([
+    //         'nama_toko' => $req->nama_toko,
+    //         'slug' => Str::slug($req->nama_toko),
+    //         'kas' => $req->kas,
+    //         'no_telp' => $req->no_telp,
+    //         'alamat' => $req->alamat
+    //     ]);
 
-        return back()->with('success', 'data Toko baru berhasil ditambahkan');
-    }
+    //     return back()->with('success', 'data Toko baru berhasil ditambahkan');
+    // }
 
     public function update(Request $req)
     {
@@ -95,7 +95,6 @@ class MarketController extends Controller
         $market->update([
             'nama_toko' => $req->nama_toko,
             'slug' => Str::slug($req->nama_toko),
-            'kas' => $req->kas,
             'no_telp' => $req->no_telp,
             'alamat' => $req->alamat
         ]);
@@ -103,17 +102,17 @@ class MarketController extends Controller
         return back()->with('success', 'data toko berhasil diubah');
     }
 
-    public function delete($id)
-    {
-        $market = Market::find($id);
+    // public function delete($id)
+    // {
+    //     $market = Market::find($id);
 
-        if (!$market) {
-            Session::flash('error', 'data toko tidak ditemukan');
-        }
+    //     if (!$market) {
+    //         Session::flash('error', 'data toko tidak ditemukan');
+    //     }
 
-        $market->delete();
-        Session::flash('success', 'Data Toko berhasil dihapus');
+    //     $market->delete();
+    //     Session::flash('success', 'Data Toko berhasil dihapus');
 
-        return redirect()->back();
-    }
+    //     return redirect()->back();
+    // }
 }
