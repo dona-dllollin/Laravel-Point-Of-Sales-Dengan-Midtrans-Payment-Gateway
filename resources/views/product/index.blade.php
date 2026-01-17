@@ -267,7 +267,7 @@
                   <th>Kode Barang</th>
                   <th>Nama Barang</th>
                   <th>Stok</th>
-                  <th>Harga</th>
+                  <th>Harga Jual</th>
                   <th>keterangan</th>
                   <th>Toko</th>
                   <th></th>
@@ -287,6 +287,7 @@
                   </td>
                   <td><span class="ammount-box bg-secondary"><i class="mdi mdi-cube-outline"></i></span>{{ $product->stok }}</td>
                   <td><span class="ammount-box bg-green"><i class="mdi mdi-coin"></i></span>Rp. {{ number_format($product->harga_jual,2,',','.') }}</td>
+                 
                   
                   <td>
                     @if($product->keterangan == 'tersedia')

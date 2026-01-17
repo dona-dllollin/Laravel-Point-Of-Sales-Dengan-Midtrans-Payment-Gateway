@@ -1,66 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Point of Sales (POS) Terpadu
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem POS ini adalah aplikasi berbasis web yang dirancang untuk membantu pengelolaan transaksi penjualan, stok barang, manajemen karyawan, serta pelaporan keuangan untuk toko atau usaha retail. Aplikasi ini dibangun menggunakan framework **Laravel** dan modern asset bundler **Vite**.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 🛒 Transaksi & Kasir
+- **Interface POS**: Antarmuka kasir yang responsif untuk proses checkout cepat.
+- **Manajemen Keranjang**: Tambah, kurangi, dan hapus item dengan mudah.
+- **Cetak Struk**: Dukungan cetak struk belanja menggunakan printer thermal (ESC/POS).
+- **Pembayaran**: Mendukung pembayaran tunai dan digital (Gateway Midtrans).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 📦 Manajemen Produk & Stok
+- **CRUD Produk**: Tambah, ubah, dan hapus data produk.
+- **Stok**: Manajemen stok masuk (Supply) dan monitoring ketersediaan barang.
+- **Kategori & Satuan**: Pengelompokan produk berdasarkan kategori dan satuan unit.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 👥 Manajemen Pengguna & Karyawan
+- **Multi-Role**: Akses berbeda untuk **Admin** dan **Kasir**.
+- **Manajemen Karyawan**: Kelola data karyawan dan akses toko.
+- **Profil**: Pengaturan profil pengguna dan ubah password.
 
-## Learning Laravel
+### 💰 Keuangan & Laporan
+- **Laporan Transaksi**: Rekap transaksi harian dan bulanan.
+- **Ekspor Data**: Unduh laporan dalam format **Excel** dan **PDF**.
+- **Manajemen Hutang (Debt)**: Pencatatan dan histori pembayaran hutang pelanggan.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🏪 Manajemen Toko
+- Mendukung pengelolaan informasi toko (Nama, Alamat, dll).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Teknologi yang Digunakan
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Bahasa Pemrograman**: PHP ^8.1
+- **Framework Backend**: Laravel Framework 10.x
+- **Frontend Assets**: Vite
+- **Database**: MySQL
+- **Templating Engine**: Blade
+- **Library Pendukung**:
+  - `midtrans/midtrans-php`: Payment Gateway
+  - `mike42/escpos-php`: Thermal Printing
+  - `maatwebsite/excel`: Export ke Excel
+  - `barryvdh/laravel-dompdf`: Generate PDF
 
-## Laravel Sponsors
+## Struktur Folder Utama
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- `app/Http/Controllers`: Logika aplikasi (Transaksi, Produk, Laporan, dll).
+- `app/Models`: Model database Eloquent.
+- `database/migrations`: Skema database.
+- `resources/views`: Tampilan antarmuka (Blade templates).
+- `routes/web.php`: Definisi rute aplikasi.
+- `public`: Aset publik (CSS, JS, Images).
 
-### Premium Partners
+## Instalasi
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Ikuti langkah-langkah berikut untuk menjalankan proyek ini di komputer lokal Anda:
 
-## Contributing
+### Prasyarat
+- PHP >= 8.1
+- Composer
+- Node.js & NPM
+- MySQL Database
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Langkah Instalasi
 
-## Code of Conduct
+1. **Clone Repository**
+   ```bash
+   git clone <repository-url>
+   cd Sistem-POS-FIX
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. **Install Dependencies PHP**
+   ```bash
+   composer install
+   ```
 
-## Security Vulnerabilities
+3. **Install Dependencies Frontend**
+   ```bash
+   npm install
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. **Konfigurasi Environment**
+   Salin file `.env.example` menjadi `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   Buka file `.env` dan sesuaikan konfigurasi database Anda:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nama_database_anda
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## License
+5. **Simulasi Data (Seeding)**
+   Jalankan migrasi database dan seeder untuk data awal:
+   ```bash
+   php artisan migrate --seed
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+6. **Generate Application Key**
+   ```bash
+   php artisan key:generate
+   ```
+
+7. **Build Assets**
+   ```bash
+   npm run build
+   ```
+   Atau untuk mode pengembangan:
+   ```bash
+   npm run dev
+   ```
+
+## Menjalankan Aplikasi
+
+Jalankan lokal development server Laravel:
+
+```bash
+php artisan serve
+```
+
+Akses aplikasi melalui browser di: `http://localhost:8000`
+
+## Konfigurasi Penting
+
+Beberapa variabel di `.env` yang perlu diperhatikan:
+
+- **APP_URL**: URL aplikasi (default: `http://localhost`).
+- **Midtrans**: Jika menggunakan fitur pembayaran online, tambahkan key berikut (sesuaikan dengan akun Midtrans Anda):
+  ```env
+  MIDTRANS_SERVER_KEY=your_server_key
+  MIDTRANS_CLIENT_KEY=your_client_key
+  MIDTRANS_IS_PRODUCTION=false
+  ```
+- **Printer**: Konfigurasi printer jika diperlukan untuk fitur cetak struk.
+
+## Contoh Penggunaan (Akun Demo)
+
+Jika Anda menjalankan `php artisan migrate --seed`, sistem akan membuat akun default (cek `database/seeders/UserSeeder.php` untuk detail pastinya). Biasanya:
+
+- **Admin**:
+  - Email: `admin@gmail.com` (Contoh asumsi, cek seeder)
+  - Password: `password`
+- **Kasir**:
+  - Email: `kasir@gmail.com`
+  - Password: `password`
+
+## Catatan Tambahan
+
+- Pastikan ekstensi PHP yang dibutuhkan Laravel (seperti `zip`, `xml`, `gd`) sudah aktif.
+- Untuk fitur cetak struk, pastikan printer terhubung dan driver terinstal dengan benar jika berjalan di lingkungan lokal.

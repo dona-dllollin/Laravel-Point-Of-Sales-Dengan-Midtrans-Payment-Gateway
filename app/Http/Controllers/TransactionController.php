@@ -266,7 +266,8 @@ class TransactionController extends Controller
             $market_id = 0;
             $market_id = $user->market_id ?? $req->market_id;
 
-            $status = $req->payment_method === 'Tunai' ? 'completed' : 'pending';
+            // $status = $req->payment_method === 'Tunai' ? 'completed' : 'pending';
+            $status = 'completed';
             $bayar = $req->payment_method === 'Tunai' ? $req->bayar : $req->total;
 
         if($req->action === "bayar"){
