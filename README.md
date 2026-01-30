@@ -147,6 +147,34 @@ Jika Anda menjalankan `php artisan migrate --seed`, sistem akan membuat akun def
   - Email: `kasir@gmail.com`
   - Password: `password`
 
+  ## ScreenShot Aplikasi
+
+| Description          | Image                                                         |
+|----------------------|---------------------------------------------------------------|
+| Homepage             | ![Homepage](./images/3._dashboard.png)                       |
+| Login                | ![Login](./images/1.form_login.png)                                 |
+| Login With Code      | ![Login With Code](./gallery/login-with-code.png)             |
+| Send Message         | ![Send Message](./gallery/send-message.png)                   |
+| Send Image           | ![Send Image](./gallery/send-image.png)                       |
+| Send File            | ![Send File](./gallery/send-file.png)                         |
+| Send Video           | ![Send Video](./gallery/send-video.png)                       |
+| Send Sticker         | ![Send Sticker](./gallery/send-sticker.png)                   |
+| Send Contact         | ![Send Contact](./gallery/send-contact.png)                   |
+| Send Location        | ![Send Location](./gallery/send-location.png)                 |
+| Send Audio           | ![Send Audio](./gallery/send-audio.png)                       |
+| Send Poll            | ![Send Poll](./gallery/send-poll.png)                         |
+| Send Presence        | ![Send Presence](./gallery/send-presence.png)                 |
+| Send Link            | ![Send Link](./gallery/send-link.png)                         |
+| My Group             | ![My Group](./gallery/group-list.png)                         |
+| Group Info From Link | ![Group Info From Link](./gallery/group-info-from-link.png)   |
+| Create Group         | ![Create Group](./gallery/group-create.png)                   |
+| Join Group with Link | ![Join Group with Link](./gallery/group-join-link.png)        |
+| Manage Participant   | ![Manage Participant](./gallery/group-manage-participant.png) |
+| My Newsletter        | ![My Newsletter](./gallery/newsletter-list.png)               |
+| My Contacts          | ![My Contacts](./gallery/contact-list.png)                    |
+| Business Profile     | ![Business Profile](./gallery/business-profile.png)           |
+
+
 ## Catatan Tambahan
 
 - Pastikan ekstensi PHP yang dibutuhkan Laravel (seperti `zip`, `xml`, `gd`) sudah aktif.
